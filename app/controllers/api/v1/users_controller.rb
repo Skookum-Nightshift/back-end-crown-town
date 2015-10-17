@@ -32,7 +32,7 @@ class Api::V1::UsersController < API::V1::BaseController
   private
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email)
+      params.require(:user).permit(:first_name, :last_name, :email, :phone, :address_line_1, :address_line_2, :city, :state, :zip, :neighborhood_id, :user_type_id, :is_active)
     end
 
     def password_params
