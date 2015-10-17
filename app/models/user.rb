@@ -8,6 +8,10 @@ class User < ActiveRecord::Base
 
   after_create :add_stripe_account
 
+  belongs_to :neighborhood
+  belongs_to :user_type
+  has_many :announcements
+
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
 
