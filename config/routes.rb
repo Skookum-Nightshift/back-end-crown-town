@@ -12,6 +12,7 @@ Rails.application.routes.draw do
       resource :sign_up, only: [:create], controller: :registrations #api.lvh.me:3000/v1/sign_up
 
       scope :users do #api.lvh.me:3000/v1/users
+        get "/", to: "users#route_index"
         post "/", to: "users#update"
         post "/password", to: "users#update_password"
       end

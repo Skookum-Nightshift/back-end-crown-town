@@ -4,6 +4,10 @@ class Api::V1::UsersController < API::V1::BaseController
     require_proof authenticatable: :User
   end
 
+  def route_index
+    render json: User.all, each_serializer: Api::V1::UserSerializer, root: nil
+  end
+
 
   def update
     @user = User.find(current_user.id)
