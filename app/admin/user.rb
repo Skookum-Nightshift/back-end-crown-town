@@ -2,7 +2,7 @@ ActiveAdmin.register User do
   scope :active, default: true
   scope :all
 
-  permit_params :id, :email, :first_name, :last_name, :password, :password_confirmation, :role
+  permit_params :id, :email, :first_name, :last_name, :password, :password_confirmation, :phone, :address_line_1, :address_line_2, :city, :state, :zip, :neighborhood_id, :user_type_id, :is_active, :role
 
   index do
     selectable_column
@@ -33,6 +33,15 @@ ActiveAdmin.register User do
       f.input :email
       f.input :password
       f.input :password_confirmation
+      f.input :phone
+      f.input :address_line_1
+      f.input :address_line_2
+      f.input :city
+      f.input :state
+      f.input :zip
+      f.input :neighborhood, collection => Neighborhood.all.order(npa_id: :asc).map{ |n| [n.npa_id, n.id]}
+      f.input :user_type, collection => UserType.all.map{ |type| [type.name, type.id]}
+      f.input :is_active
     end
     f.actions
   end
