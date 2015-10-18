@@ -11,29 +11,88 @@
 @import "active_admin/mixins";
 @import "active_admin/base";
 
-$skinActiveColor: #3498db;
-$skinHeaderBck: #2c3e50;
-$panelHeaderBck: #2c3e50;
-// $skinLogo: url("admin_logo.png") no-repeat 0 0;
+// colors
+$navyBlue: #2c3e50;
+$red: #e64c3b;
+$white: #fff;
+$lightGrey: #aaa;
+$green: #43a752;
+
+// font
+$mainFont: 'Raleway', sans-serif;
+$font-normal: 400;
+$font-bold: 600;
+$font-light: 200;
+
+// $skinActiveColor: #3498db;
+// $skinHeaderBck: #2c3e50;
+// $panelHeaderBck: #2c3e50;
+$skinLogo: url("ctc-logo.png") no-repeat 0 0;
 
 @import "active_skin";
 
-#header {
-  background-color: #FFF;
+.active_admin {
+    font-family: $mainFont !important;
+    font-weight: $font-normal !important;
+
+    #header {
+        background-color: $navyBlue;
+        color: $white;
+        a {
+            color: $white;
+        }
+        #site_title {
+            background-size: 30px;
+            background-position: center;
+        }
+        #utility_nav {
+            background: $navyBlue;
+            a:hover {
+                color: $red;
+            }
+        }
+    }
+    
+    #title_bar {
+        background: $white;
+        border-bottom: 4px solid $red;
+        h2 {
+            color: $navyBlue;
+            font-weight: $font-light;
+        }
+    }
+
+    #titlebar_right .action_items a {
+        font-family: $mainFont !important;
+        border-radius: 10px !important;
+        box-shadow: none !important;
+        text-shadow: none !important;
+        background: $red !important;
+        color: $white !important;
+        border: 2px solid $red !important;
+        border-bottom: 6px solid darken($red, 15%) !important;
+        padding: 10px 30px !important;
+        font-size: 14px !important;
+        font-weight: $font-normal !important;
+        &:hover {
+            background: $white !important;
+            // color: $red !important;
+
+        }
+    }
+
+    form .inline-hints img {
+        max-width: 160px;
+        height: auto;
+    }
+
+    .status_tag {
+        &.yes {
+            background: $navyBlue !important;
+        }
+        &.no {
+            background: $red;
+        }
+    }
 }
 
-#titlebar_right .action_items a {
-  border-radius: 0 !important;
-  box-shadow: none !important;
-  text-shadow: none !important;
-  background: #3498db !important;
-  color: #FFF !important;
-  border: none !important;
-  padding: 17px !important;
-  font-size: 14px !important;
-}
-
-form .inline-hints img {
-  max-width: 160px;
-  height: auto;
-}
