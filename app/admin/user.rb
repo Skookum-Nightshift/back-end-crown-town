@@ -2,7 +2,7 @@ ActiveAdmin.register User do
   scope :active, default: true
   scope :all
 
-  permit_params :id, :email, :first_name, :last_name, :password, :password_confirmation
+  permit_params :id, :email, :first_name, :last_name, :password, :password_confirmation, :role
 
   index do
     selectable_column
@@ -13,12 +13,14 @@ ActiveAdmin.register User do
     column :current_sign_in_at
     column :sign_in_count
     column :created_at
+    column :role
     actions
   end
 
   filter :name
   filter :active
   filter :email
+  filter :role
   filter :current_sign_in_at
   filter :sign_in_count
   filter :created_at
@@ -27,6 +29,7 @@ ActiveAdmin.register User do
     f.inputs "User Details" do
       f.input :first_name
       f.input :last_name
+      f.input :role
       f.input :email
       f.input :password
       f.input :password_confirmation

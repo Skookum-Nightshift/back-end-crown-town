@@ -1,7 +1,7 @@
 class Api::V1::SessionSerializer < ActiveModel::Serializer
 
   attributes :email, :full_name, :user_id, :auth_token, :auth_token_expiration,
-    :first_name, :last_name
+    :first_name, :last_name, :role
 
   attr_reader :token
 
@@ -15,7 +15,6 @@ class Api::V1::SessionSerializer < ActiveModel::Serializer
 
   def token
     expiration_date = 1.day.from_now.to_i
-    expiration_date = 2.days.from_now.to_i if object.is_contractor?
     secret = Rails.application.secrets.secret_key_base
     @token ||= Proof::Token.from_data({ user_id: object.id }, secret, 'HS256', expiration_date)
   end

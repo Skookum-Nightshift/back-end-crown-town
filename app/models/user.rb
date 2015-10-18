@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
+  scope :clients, -> { where(role: 'client') }
+  scope :employee, -> { where(role: 'employee') }
 
   validates :first_name, presence: true
   validates :last_name, presence: true
