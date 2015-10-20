@@ -24,6 +24,17 @@ STRIPE_SECRET=placeholder
 STRIPE_PUBLISHABLE=placeholder
 ```
 
+### Set up Vagrant Dev Environment
+* Download and install Vagrant (https://www.vagrantup.com/) and VirtualBox (https://www.virtualbox.org/wiki/Downloads)
+* Run `vagrant plugin install vagrant-vbguest` in the terminal
+* Run `vagrant up` in the terminal, in the project folder (First time will take a while...It has to download everything.)
+* `vagrant ssh` once that is complete. That will log you into the virtual machine
+* `cd /vagrant` will move you into the virtual project folder which is mirrored from your local machine
+* `bundle`
+* `rake db:migrate`
+* `rails s -b 0.0.0.0` This starts the server and forwards the port to localhost:3000 on your local machine
+* I can explain more next Monday, but this will give us a consistent dev environment, especially on Windows!
+
 
 ### Run
 - make sure that `log/development.log` exists if not run `rails s`
