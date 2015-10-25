@@ -23,6 +23,7 @@ gem "rack-rewrite" # server settings
 # gem "sidekiq"
 # gem "stripe"
 gem "validates" # active model validators
+gem "font-awesome-rails"
 
 
 # REQUIRED #
