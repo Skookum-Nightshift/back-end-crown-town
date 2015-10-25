@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   belongs_to :neighborhood
   belongs_to :user_type
   has_many :announcements
+  has_many :routes
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
