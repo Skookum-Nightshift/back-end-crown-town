@@ -1,6 +1,6 @@
 class Api::V1::UsersController < API::V1::BaseController
 
-  before_action only: [ :update, :update_password ] do
+  before_action only: [ :update, :update_password, :cancel_pickup, :update_bucket_location ] do
     require_proof authenticatable: :User
   end
 
@@ -29,10 +29,32 @@ class Api::V1::UsersController < API::V1::BaseController
     end
   end
 
+  def cancel_pickup
+    @user = User.find(current_user.id)
+    if @user.update({can_pickup: !@user.can_pickup})
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
+  def update_bucket_location
+    @user = User.find(current_user.id)
+    if @user.update(bucket_location: params[:bucket_location])
+      render json: @user
+    else
+      render json: @user.errors, status: :unprocessable_entity
+    end
+  end
+
   private
 
     def user_params
-      params.require(:user).permit(:first_name, :last_name, :email, :phone, :address_line_1, :address_line_2, :city, :state, :zip, :neighborhood_id, :user_type_id, :is_active)
+      params.require(:user).permit(:first_name, :last_name, :email, 
+        :phone, :address_line_1, :address_line_2, 
+        :city, :state, :zip, 
+        :neighborhood_id, :user_type_id, :is_active,
+        :bucket_location, :can_pickup)
     end
 
     def password_params

@@ -5,3 +5,14 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+
+neighborhoods = Neighborhood.create([
+  {
+    pickup_day: 'Monday',
+    npa_id: 339
+  },
+  {
+    pickup_day: 'Tuesday',
+    npa_id: 388
+  }
+]);
