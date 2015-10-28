@@ -12,6 +12,7 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 20151023032744) do
+
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
     t.text     "body"
@@ -107,11 +108,12 @@ ActiveRecord::Schema.define(version: 20151023032744) do
     t.integer  "neighborhood_id"
     t.integer  "user_type_id"
     t.boolean  "is_active"
-    t.string   "role",                   default: "client", null: false
     t.string   "bucket_location",        default: "FrontDoor", null: false
     t.boolean  "can_pickup",             default: true,        null: false
+    t.string   "role",                   default: "client",    null: false
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
 end
