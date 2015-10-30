@@ -7,8 +7,16 @@ class User < ActiveRecord::Base
   # mount_uploader :profile_image, ImageUploader
 
   after_create :add_stripe_account
+  
+  geocoded_by :full_address
+  after_validation :geocode
+
+  reverse_geocoded_by :latitude, :longitude
+  after_validation :reverse_geocode  # auto-fetch address
 
   belongs_to :neighborhood
+  has_many :user_neighborhoods
+  has_many :neighborhoods, through: :user_neighborhoods
   belongs_to :user_type
   has_many :announcements
   has_many :routes

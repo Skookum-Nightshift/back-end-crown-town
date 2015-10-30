@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023032744) do
+ActiveRecord::Schema.define(version: 20151030024749) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -63,8 +63,11 @@ ActiveRecord::Schema.define(version: 20151023032744) do
   create_table "neighborhoods", force: :cascade do |t|
     t.string   "pickup_day"
     t.integer  "npa_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "full_address"
   end
 
   create_table "routes", force: :cascade do |t|
@@ -75,6 +78,13 @@ ActiveRecord::Schema.define(version: 20151023032744) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer  "user_id"
+  end
+
+  create_table "user_neighborhoods", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "neighborhood_id"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
   end
 
   create_table "user_types", force: :cascade do |t|
@@ -100,17 +110,15 @@ ActiveRecord::Schema.define(version: 20151023032744) do
     t.string   "last_name"
     t.boolean  "active",                 default: true,        null: false
     t.string   "phone"
-    t.string   "address_line_1"
-    t.string   "address_line_2"
-    t.string   "city"
-    t.string   "state"
-    t.string   "zip"
     t.integer  "neighborhood_id"
     t.integer  "user_type_id"
     t.boolean  "is_active"
+    t.string   "role",                   default: "client",    null: false
     t.string   "bucket_location",        default: "FrontDoor", null: false
     t.boolean  "can_pickup",             default: true,        null: false
-    t.string   "role",                   default: "client",    null: false
+    t.float    "latitude"
+    t.float    "longitude"
+    t.string   "full_address"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
