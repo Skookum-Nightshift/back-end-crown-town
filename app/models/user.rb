@@ -11,9 +11,6 @@ class User < ActiveRecord::Base
   geocoded_by :full_address
   after_validation :geocode
 
-  reverse_geocoded_by :latitude, :longitude
-  after_validation :reverse_geocode  # auto-fetch address
-
   belongs_to :neighborhood
   has_many :user_neighborhoods
   has_many :neighborhoods, through: :user_neighborhoods
@@ -33,6 +30,10 @@ class User < ActiveRecord::Base
 
   def name
     "#{first_name} #{last_name}".strip
+  end
+
+  def full_address
+    "#{address_line_1}, #{city}, #{state}, #{zip}"
   end
 
   private
