@@ -10,6 +10,9 @@ class Neighborhood < ActiveRecord::Base
   has_many :user_neighborhoods
   has_many :users, through: :user_neighborhoods
 
+  has_many :picked_up_neighborhoods
+  has_many :picked_up_locations, through: :picked_up_neighborhoods
+
 
     def full_address
     "#{address_line_1}, #{city}, #{state}, #{zip}"
