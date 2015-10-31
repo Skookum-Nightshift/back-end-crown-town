@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151030014222) do
+ActiveRecord::Schema.define(version: 20151031034147) do
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string   "namespace"
@@ -63,10 +63,22 @@ ActiveRecord::Schema.define(version: 20151030014222) do
   create_table "neighborhoods", force: :cascade do |t|
     t.string   "pickup_day"
     t.integer  "npa_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
     t.float    "latitude"
     t.float    "longitude"
+    t.string   "full_address"
+  end
+
+  create_table "picked_up_locations", force: :cascade do |t|
+    t.integer "pick_up_id"
+    t.integer "user_id"
+    t.string  "picked_up_neighborhood_id"
+  end
+
+  create_table "picked_up_neighborhoods", force: :cascade do |t|
+    t.string  "picked_up_date"
+    t.integer "neighborhood_id"
   end
 
   create_table "routes", force: :cascade do |t|
