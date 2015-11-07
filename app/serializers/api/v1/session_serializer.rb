@@ -1,7 +1,7 @@
 class Api::V1::SessionSerializer < ActiveModel::Serializer
 
   attributes :email, :full_name, :user_id, :auth_token, :auth_token_expiration,
-    :first_name, :last_name, :role, :routes, :bucket_location, :can_pickup
+    :first_name, :last_name, :role, :bucket_location, :can_pickup
     
   attr_reader :token
 
@@ -29,18 +29,6 @@ class Api::V1::SessionSerializer < ActiveModel::Serializer
 
   def auth_token_expiration
     token.expiration_date * 1000
-  end
-
-  def routes
-    if object.routes
-      routes = []
-      object.routes.each do |route|
-        routes.push(Api::V1::RouteSerializer.new(route).attributes)
-      end
-      routes
-    else
-      []
-    end
   end
 
 end

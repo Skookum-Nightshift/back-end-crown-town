@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   belongs_to :neighborhood
   has_many :user_neighborhoods
   has_many :neighborhoods, through: :user_neighborhoods
+  
   belongs_to :user_type
   has_many :announcements
   has_many :routes
@@ -33,7 +34,7 @@ class User < ActiveRecord::Base
   end
 
   def full_address
-    "#{address_line_1}, #{city}, #{state}, #{zip}"
+    "#{address_line_1}, #{address_line_2}, #{city} #{state}, #{zip}"
   end
 
   private
