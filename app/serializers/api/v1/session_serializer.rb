@@ -2,7 +2,7 @@ class Api::V1::SessionSerializer < ActiveModel::Serializer
 
   attributes :email, :full_name, :user_id, :auth_token, :auth_token_expiration,
     :first_name, :last_name, :role, :bucket_location, :can_pickup
-    
+
   attr_reader :token
 
   def user_id
@@ -10,11 +10,7 @@ class Api::V1::SessionSerializer < ActiveModel::Serializer
   end
 
   def full_name
-    "#{object.first_name} #{object.last_name}".strip
-  end
-
-  def bucket_location
-    object.bucket_location
+    object.name
   end
 
   def token

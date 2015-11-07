@@ -1,47 +1,60 @@
 ActiveAdmin.register User do
   scope :active, default: true
+  scope :clients
+  scope :employee
   scope :all
 
-  permit_params :id, :email, :first_name, :last_name, :password, :password_confirmation, :phone, :address_line_1, :address_line_2, :city, :state, :zip, :neighborhood_id, :user_type_id, :is_active, :role
+  permit_params :id, :email, :first_name, :last_name, :password,
+                :password_confirmation, :phone, :address_line_1, :address_line_2,
+                :city, :state, :zip, :is_active, :role, :bucket_location,
+                user_neighborhoods_attributes: [:id, :neighborhood_id, :_destroy]
 
   index do
     selectable_column
-    id_column
     column :name
     column :email
     column :active
-    column :current_sign_in_at
-    column :sign_in_count
+    column "Role" do |data|
+      data.role.capitalize
+    end
+    column "Address" do |data|
+      truncate(data.full_address)
+    end
     column :created_at
-    column :role
     actions
   end
 
   filter :name
   filter :active
   filter :email
-  filter :role
-  filter :current_sign_in_at
-  filter :sign_in_count
+  filter :role, as: :select, collection: [['Client', 'client'], ['Employee', 'employee']]
   filter :created_at
+  filter :neighborhoods
 
   form do |f|
     f.inputs "User Details" do
-      f.input :first_name
-      f.input :last_name
-      f.input :role
-      f.input :email
-      f.input :password
-      f.input :password_confirmation
-      f.input :phone
-      f.input :address_line_1
-      f.input :address_line_2
-      f.input :city
-      f.input :state
-      f.input :zip
-      f.input :neighborhood, collection => Neighborhood.all.order(npa_id: :asc).map{ |n| [n.npa_id, n.id]}
-      f.input :user_type, collection => UserType.all.map{ |type| [type.name, type.id]}
+      f.input :first_name, required: true
+      f.input :last_name, required: true
+      f.input :role, required: true, as: :select, collection: [['Client', 'client'], ['Employee', 'employee']]
+      f.input :email, required: true
+      f.input :password if f.object.new_record?
+      f.input :password_confirmation if f.object.new_record?
       f.input :is_active
+    end
+    f.inputs "Contact Details" do
+      f.input :bucket_location, as: :select, collection: [['Front Door', 'FrontDoor'], ['Street Side', 'StreetSide']]
+      f.input :phone
+      f.input :address_line_1, required: true
+      f.input :address_line_2
+      f.input :city, required: true
+      f.input :state, required: true
+      f.input :zip, required: true
+    end
+    f.inputs "Neighborhood Info" do
+      f.has_many :user_neighborhoods, allow_destroy: true,
+                new_record: "Add Neighborhood", heading: false do |neighborhood|
+        neighborhood.input :neighborhood_id, label: "Neighborhood", as: :select, collection: Neighborhood.all
+      end
     end
     f.actions
   end

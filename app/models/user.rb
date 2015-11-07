@@ -7,17 +7,16 @@ class User < ActiveRecord::Base
   # mount_uploader :profile_image, ImageUploader
 
   after_create :add_stripe_account
-  
+
   geocoded_by :full_address
   after_validation :geocode
 
-  belongs_to :neighborhood
-  has_many :user_neighborhoods
+  has_many :user_neighborhoods, dependent: :destroy
+  accepts_nested_attributes_for :user_neighborhoods, allow_destroy: true
   has_many :neighborhoods, through: :user_neighborhoods
-  
-  belongs_to :user_type
+
   has_many :announcements
-  has_many :routes
+  has_many :picked_up_locations
 
   scope :active, -> { where(active: true) }
   scope :inactive, -> { where(active: false) }
@@ -34,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def full_address
-    "#{address_line_1}, #{address_line_2}, #{city} #{state}, #{zip}"
+    "#{address_line_1}, #{address_line_2.length > 0 ? address_line_2+',' : ''} #{city} #{state}, #{zip}"
   end
 
   private

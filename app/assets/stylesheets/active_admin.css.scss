@@ -52,7 +52,11 @@ $skinLogo: url("ctc-logo.png") no-repeat 0 0;
             }
         }
     }
-    
+
+    #footer p {
+      display: none;
+    }
+
     #title_bar {
         background: $white;
         border-bottom: 4px solid $red;
@@ -95,4 +99,3 @@ $skinLogo: url("ctc-logo.png") no-repeat 0 0;
         }
     }
 }
-

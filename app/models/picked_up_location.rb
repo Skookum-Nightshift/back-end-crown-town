@@ -1,4 +1,4 @@
 class PickedUpLocation < ActiveRecord::Base
-  belongs_to :picked_up_neighborhood
-  belongs_to :picked_up_location
+  belongs_to :neighborhood
+  belongs_to :user
 end
