@@ -24,6 +24,7 @@ gem "rack-rewrite" # server settings
 # gem "stripe"
 gem "validates" # active model validators
 gem "font-awesome-rails"
+gem 'geocoder'
 
 
 # REQUIRED #
