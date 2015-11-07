@@ -1,21 +1,26 @@
 ActiveAdmin.register Neighborhood do
 
-permit_params :npa_id, :pickup_day, :address_line_1, :address_line_2, :city,
-              :state, :zip
+  permit_params :npa_ids, :pickup_day, :name
 
-form do |f|
-  f.inputs "Neighborhood Details" do
-    f.input :npa_id
-    f.input :pickup_day, collection: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], required: true
+  filter :name
+  filter :pickup_day, as: :select, collection: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
+  filter :npa_ids
+
+  index do
+    selectable_column
+    column :name
+    column :pickup_day
+    column :npa_ids
+    actions
   end
-  f.inputs "Neighborhood Address" do
-    f.input :address_line_1, required: true
-    f.input :address_line_2
-    f.input :city, required: true
-    f.input :state, required: true
-    f.input :zip, required: true
+
+  form do |f|
+    f.inputs "Neighborhood Details" do
+      f.input :name, required: true
+      f.input :npa_ids, required: true
+      f.input :pickup_day, collection: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'], required: true
+    end
+    f.actions
   end
-  f.actions
-end
 
 end

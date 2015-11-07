@@ -11,7 +11,7 @@ class Api::V1::NeighborhoodsController < API::V1::BaseController
   def needs_pick_up
     location = current_user.neighborhoods.where( pickup_day: Time.now.strftime("%A") )
     if location
-      render json: location, serilizer: Api::V1::RouteSerializer, root: nil
+      render json: location, serilizer: Api::V1::NeighborhoodSerializer, root: nil
     else
       render json: { errors: ['no route found'] }, status: :unprocessable_entity
     end
