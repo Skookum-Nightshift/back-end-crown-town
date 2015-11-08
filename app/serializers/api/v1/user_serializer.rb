@@ -8,7 +8,6 @@ class Api::V1::UserSerializer < ActiveModel::Serializer
   end
 
   def full_name
-    object.name
+    object.full_name
   end
-
 end
