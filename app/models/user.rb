@@ -28,12 +28,12 @@ class User < ActiveRecord::Base
   validates :email, email: true
   validates_uniqueness_of :email
 
-  def name
+  def full_name
     "#{first_name} #{last_name}".strip
   end
 
   def full_address
-    "#{address_line_1}, #{address_line_2.length > 0 ? address_line_2+',' : ''} #{city} #{state}, #{zip}"
+    "#{address_line_1}, #{!address_line_2.blank? ? address_line_2+',' : ''} #{city} #{state}, #{zip}"
   end
 
   private
