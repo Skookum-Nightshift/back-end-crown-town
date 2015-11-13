@@ -8,6 +8,20 @@ class Api::V1::UsersController < API::V1::BaseController
     render json: User.all, each_serializer: Api::V1::UserSerializer, root: nil
   end
 
+  def update_weight
+    message = "Updated weight"
+    @user = User.find(params[:user_id])
+    if params[:daily_compost_weight]
+      total = (@user.total_compost_weight || 0) + params[:daily_compost_weight].to_i
+      @user.update_attributes({daily_compost_weight: params[:daily_compost_weight].to_i, total_compost_weight: total})
+    else
+      message = "Missing daily_compost_weight param"
+    end
+
+
+    render json: { message: message }
+  end
+
 
   def update
     @user = User.find(current_user.id)
@@ -54,7 +68,7 @@ class Api::V1::UsersController < API::V1::BaseController
         :phone, :address_line_1, :address_line_2, 
         :city, :state, :zip, 
         :neighborhood_id, :user_type_id, :is_active,
-        :bucket_location, :can_pickup)
+        :bucket_location, :can_pickup, :daily_compost_weight, :total_compost_weight)
     end
 
     def password_params
