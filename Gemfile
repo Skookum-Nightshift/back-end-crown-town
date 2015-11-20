@@ -21,11 +21,11 @@ gem "puma" # server settings
 gem "rack-cors" # server settings
 gem "rack-rewrite" # server settings
 # gem "sidekiq"
-# gem "stripe"
+gem "stripe"
 gem "validates" # active model validators
 gem "font-awesome-rails"
 gem 'geocoder'
-
+gem 'geokit'
 
 # REQUIRED #
 gem "rails", "4.2.3"

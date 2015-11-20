@@ -1,7 +1,12 @@
 class Api::V1::UsersController < API::V1::BaseController
 
-  before_action only: [ :update, :update_password, :cancel_pickup, :update_bucket_location ] do
+  before_action only: [ :update, :update_password, :cancel_pickup, :update_bucket_location, :send_request ] do
     require_proof authenticatable: :User
+  end
+
+  def send_request
+    RequestMailer.client_request(params[:body], current_user.email).deliver_now
+    render json: { message: "Request Sent." }
   end
 
   def route_index
@@ -12,7 +17,7 @@ class Api::V1::UsersController < API::V1::BaseController
   def update
     @user = User.find(current_user.id)
     if @user.update(user_params)
-      NotificationMailer.account_change(@user).deliver_now
+      # NotificationMailer.account_change(@user).deliver_now
       render json: @user, serializer: Api::V1::SessionSerializer, root: nil
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -22,7 +27,7 @@ class Api::V1::UsersController < API::V1::BaseController
   def update_password
     @user = User.find(current_user.id)
     if @user.update_with_password(password_params)
-      NotificationMailer.account_change(@user).deliver_now
+      # NotificationMailer.account_change(@user).deliver_now
       render json: @user, serializer: Api::V1::SessionSerializer, root: nil
     else
       render json: @user.errors, status: :unprocessable_entity
@@ -32,7 +37,7 @@ class Api::V1::UsersController < API::V1::BaseController
   def cancel_pickup
     @user = User.find(current_user.id)
     if @user.update({can_pickup: !@user.can_pickup})
-      render json: @user
+      render json: @user, serializer: Api::V1::SessionSerializer, root: nil
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -41,7 +46,7 @@ class Api::V1::UsersController < API::V1::BaseController
   def update_bucket_location
     @user = User.find(current_user.id)
     if @user.update(bucket_location: params[:bucket_location])
-      render json: @user
+      render json: @user, serializer: Api::V1::SessionSerializer, root: nil
     else
       render json: @user.errors, status: :unprocessable_entity
     end

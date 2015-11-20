@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
   end
 
   def full_address
-    "#{address_line_1}, #{address_line_2.length > 0 ? address_line_2+',' : ''} #{city} #{state}, #{zip}"
+    "#{address_line_1}, #{!address_line_2.nil? ? address_line_2+',' : ''} #{city} #{state}, #{zip}"
   end
 
   private

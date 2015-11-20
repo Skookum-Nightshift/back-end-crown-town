@@ -1,9 +1,17 @@
 class Api::V1::SessionSerializer < ActiveModel::Serializer
 
   attributes :email, :full_name, :user_id, :auth_token, :auth_token_expiration,
-    :first_name, :last_name, :role, :bucket_location, :can_pickup
+    :first_name, :last_name, :role, :bucket_location, :can_pickup, :neighborhood, :stripe_id
 
   attr_reader :token
+
+  def neighborhood
+    if object.neighborhoods.count > 0
+      Api::V1::NeighborhoodSerializer.new(object.neighborhoods.first).attributes
+    else
+      {}
+    end
+  end
 
   def user_id
     object.id
