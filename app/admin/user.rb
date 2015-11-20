@@ -7,11 +7,12 @@ ActiveAdmin.register User do
   permit_params :id, :email, :first_name, :last_name, :password,
                 :password_confirmation, :phone, :address_line_1, :address_line_2,
                 :city, :state, :zip, :is_active, :role, :bucket_location,
+                :total_compost_weight, :daily_compost_weight,
                 user_neighborhoods_attributes: [:id, :neighborhood_id, :_destroy]
 
   index do
     selectable_column
-    column :name
+    column :full_name
     column :email
     column :active
     column "Role" do |data|
@@ -19,6 +20,9 @@ ActiveAdmin.register User do
     end
     column "Address" do |data|
       truncate(data.full_address)
+    end
+    column "Last Weight" do |data|
+      data.daily_compost_weight
     end
     column :created_at
     actions
@@ -50,6 +54,12 @@ ActiveAdmin.register User do
       f.input :state, required: true
       f.input :zip, required: true
     end
+
+    f.inputs "Weight Info" do
+      f.input :total_compost_weight
+      f.input :daily_compost_weight
+    end
+
     f.inputs "Neighborhood Info" do
       f.has_many :user_neighborhoods, allow_destroy: true,
                 new_record: "Add Neighborhood", heading: false do |neighborhood|

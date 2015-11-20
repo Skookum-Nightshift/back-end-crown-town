@@ -1,7 +1,8 @@
 class Api::V1::SessionSerializer < ActiveModel::Serializer
 
   attributes :email, :full_name, :user_id, :auth_token, :auth_token_expiration,
-    :first_name, :last_name, :role, :bucket_location, :can_pickup, :neighborhood, :stripe_id
+    :first_name, :last_name, :role, :bucket_location,
+    :can_pickup, :daily_compost_weight, :total_compost_weight, :neighborhood, :stripe_id
 
   attr_reader :token
 
@@ -18,7 +19,7 @@ class Api::V1::SessionSerializer < ActiveModel::Serializer
   end
 
   def full_name
-    object.name
+    object.full_name
   end
 
   def token

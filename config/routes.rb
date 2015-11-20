@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         get "/", to: "users#route_index"
         post "/", to: "users#update"
         post "/request", to: "users#send_request"
+        post "/weight", to: "users#update_weight"
         post "/password", to: "users#update_password"
         post "/cancel_pickup", to: "users#cancel_pickup"
         post "/update_bucket_location", to: "users#update_bucket_location"

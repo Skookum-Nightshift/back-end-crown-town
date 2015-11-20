@@ -28,7 +28,7 @@ class User < ActiveRecord::Base
   validates :email, email: true
   validates_uniqueness_of :email
 
-  def name
+  def full_name
     "#{first_name} #{last_name}".strip
   end
 
